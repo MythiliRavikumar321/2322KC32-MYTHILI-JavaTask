@@ -1,0 +1,153 @@
+mysql> use mythili;
+Database changed
+mysql> create table customers (
+    ->     customerid int primary key,
+    ->     name varchar(100),
+    ->     age int,
+    ->     country varchar(50),
+    ->     email varchar(100)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> desc customers
+    -> ;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| customerid | int          | NO   | PRI | NULL    |       |
+| name       | varchar(100) | YES  |     | NULL    |       |
+| age        | int          | YES  |     | NULL    |       |
+| country    | varchar(50)  | YES  |     | NULL    |       |
+| email      | varchar(100) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+5 rows in set (0.04 sec)
+
+mysql> insert into  customers values(1,'john',30,'india','john@gmail.com');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into  customers values(2,'myur',28,'india','myu@gmail.com');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into  customers values(3,'sree',29,'india','sri09@gmail.com');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into  customers values(4,'sree devi',32,'india','devi@gmail.com');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into  customers values(5,'ravi',32,'india','ravi@gmail.com');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from customers;
++------------+-----------+------+---------+-----------------+
+| customerid | name      | age  | country | email           |
++------------+-----------+------+---------+-----------------+
+|          1 | john      |   30 | india   | john@gmail.com  |
+|          2 | myur      |   28 | india   | myu@gmail.com   |
+|          3 | sree      |   29 | india   | sri09@gmail.com |
+|          4 | sree devi |   32 | india   | devi@gmail.com  |
+|          5 | ravi      |   32 | india   | ravi@gmail.com  |
++------------+-----------+------+---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employees where name like '%john%';
+ERROR 1146 (42S02): Table 'mythili.employees' doesn't exist
+mysql> update customers set country = USA where name=myur;
+ERROR 1054 (42S22): Unknown column 'myur' in 'where clause'
+mysql> update customers set country = USA where name='myur';
+ERROR 1054 (42S22): Unknown column 'USA' in 'field list'
+mysql> update customers set country = USA where  customerid=1;
+ERROR 1054 (42S22): Unknown column 'USA' in 'field list'
+mysql> update customers
+    -> set country = 'Canada'
+    -> where customerid = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customers
+    -> set country = 'USA'
+    -> where customerid = 4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from customers;
++------------+-----------+------+---------+-----------------+
+| customerid | name      | age  | country | email           |
++------------+-----------+------+---------+-----------------+
+|          1 | john      |   30 | Canada  | john@gmail.com  |
+|          2 | myur      |   28 | india   | myu@gmail.com   |
+|          3 | sree      |   29 | india   | sri09@gmail.com |
+|          4 | sree devi |   32 | USA     | devi@gmail.com  |
+|          5 | ravi      |   32 | india   | ravi@gmail.com  |
++------------+-----------+------+---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from customers where country = 'USA';
++------------+-----------+------+---------+----------------+
+| customerid | name      | age  | country | email          |
++------------+-----------+------+---------+----------------+
+|          4 | sree devi |   32 | USA     | devi@gmail.com |
++------------+-----------+------+---------+----------------+
+1 row in set (0.03 sec)
+
+mysql> select * from customers where country = 'india';
++------------+------+------+---------+-----------------+
+| customerid | name | age  | country | email           |
++------------+------+------+---------+-----------------+
+|          2 | myur |   28 | india   | myu@gmail.com   |
+|          3 | sree |   29 | india   | sri09@gmail.com |
+|          5 | ravi |   32 | india   | ravi@gmail.com  |
++------------+------+------+---------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customers where age > 30;
++------------+-----------+------+---------+----------------+
+| customerid | name      | age  | country | email          |
++------------+-----------+------+---------+----------------+
+|          4 | sree devi |   32 | USA     | devi@gmail.com |
+|          5 | ravi      |   32 | india   | ravi@gmail.com |
++------------+-----------+------+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from customers where email like '%@gmail.com';
++------------+-----------+------+---------+-----------------+
+| customerid | name      | age  | country | email           |
++------------+-----------+------+---------+-----------------+
+|          1 | john      |   30 | Canada  | john@gmail.com  |
+|          2 | myur      |   28 | india   | myu@gmail.com   |
+|          3 | sree      |   29 | india   | sri09@gmail.com |
+|          4 | sree devi |   32 | USA     | devi@gmail.com  |
+|          5 | ravi      |   32 | india   | ravi@gmail.com  |
++------------+-----------+------+---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select email from customers where email like '%@gmail.com';
++-----------------+
+| email           |
++-----------------+
+| john@gmail.com  |
+| myu@gmail.com   |
+| sri09@gmail.com |
+| devi@gmail.com  |
+| ravi@gmail.com  |
++-----------------+
+5 rows in set (0.00 sec)
+
+mysql> update customers set email = replace(email, '@gmail.com', '@outlook.com') where customerid = 1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from custombers;
+ERROR 1146 (42S02): Table 'mythili.custombers' doesn't exist
+mysql> select* from customers;
++------------+-----------+------+---------+------------------+
+| customerid | name      | age  | country | email            |
++------------+-----------+------+---------+------------------+
+|          1 | john      |   30 | Canada  | john@outlook.com |
+|          2 | myur      |   28 | india   | myu@gmail.com    |
+|          3 | sree      |   29 | india   | sri09@gmail.com  |
+|          4 | sree devi |   32 | USA     | devi@gmail.com   |
+|          5 | ravi      |   32 | india   | ravi@gmail.com   |
++------------+-----------+------+---------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> notee;

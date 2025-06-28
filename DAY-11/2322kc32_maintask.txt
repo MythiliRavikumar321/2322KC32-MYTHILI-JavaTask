@@ -1,0 +1,44 @@
+mysql> use mythili;
+Database changed
+mysql> create table sales (
+    ->     sale_id int primary key,
+    ->     sale_date date,
+    ->     region varchar(50),
+    ->     salesperson varchar(50),
+    ->     product_category varchar(50),
+    ->     amount decimal(10, 2)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc sales;
++------------------+---------------+------+-----+---------+-------+
+| Field            | Type          | Null | Key | Default | Extra |
++------------------+---------------+------+-----+---------+-------+
+| sale_id          | int           | NO   | PRI | NULL    |       |
+| sale_date        | date          | YES  |     | NULL    |       |
+| region           | varchar(50)   | YES  |     | NULL    |       |
+| salesperson      | varchar(50)   | YES  |     | NULL    |       |
+| product_category | varchar(50)   | YES  |     | NULL    |       |
+| amount           | decimal(10,2) | YES  |     | NULL    |       |
++------------------+---------------+------+-----+---------+-------+
+6 rows in set (0.04 sec)
+
+mysql> insert into sales values(1, '2025-01-10', 'East', 'Alice', 'Electronics', 1200.00),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> insert into sales values(1, '2025-01-10', 'East', 'Alice', 'Electronics', 1200.00);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(2, '2025-02-20', 'East', 'Amar', 'Electronics', 1600.00);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(3, '2025-04-22', 'East', 'bavan', 'Electronics', 3600.00);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(4, '2025-07-12', 'East', 'cinnu', 'Electronics', 3690.00);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into sales values(5, '2025-09-13', 'East', 'myu', 'Electronics', 30090.00);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> notee;

@@ -1,0 +1,225 @@
+mysql> use myu;
+Database changed
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsd_task           |
+| hotel_db           |
+| information_schema |
+| mysql              |
+| mythili            |
+| myu                |
+| performance_schema |
+| sakila             |
+| sys                |
+| task               |
+| world              |
++--------------------+
+11 rows in set (0.04 sec)
+
+mysql> CREATE TABLE Departments (
+    ->     department_id INT PRIMARY KEY,
+    ->     department_name VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> create table Students (
+    ->     student_id int primary key,
+    ->     student_name varchar(100),
+    ->     department_id int,
+    ->     foreign key (department_id) references Departments(department_id)
+    -> );
+ERROR 1050 (42S01): Table 'students' already exists
+mysql> 
+mysql> create table Student(
+    ->     student_id int primary key,
+    ->     student_name varchar(100),
+    ->     department_id int,
+    ->     foreign key (department_id) references Departments(department_id)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> 
+mysql> create table Courses (
+    ->     course_id int primary key,
+    ->     course_name varchar(100),
+    ->     department_id int,
+    ->     foreign key (department_id) references Departments(department_id)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> create table Results (
+    ->     result_id int primary key,
+    ->     student_id int,
+    ->     course_id int,
+    ->     marks int,
+    ->     foreign key (student_id) references Students(student_id),
+    ->      foreign key  (course_id) references Courses(course_id)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> insert into Departments values (1, 'Computer Science');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Departments values (2, 'Computer Application');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from  Departments;
++---------------+----------------------+
+| department_id | department_name      |
++---------------+----------------------+
+|             1 | Computer Science     |
+|             2 | Computer Application |
++---------------+----------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into Students values (101, 'Alice', 1);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into Students values (1, 'Alice', 1);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into Students values(1, 'Alice', 1);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into Student values (101, 'Alice', 1);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Student values (102, 'Myuraa', 2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Student values (103, 'sneha', 1);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Student values (104, 'hunny', 1);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into Student values (105, 'honey', 2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from Student;
++------------+--------------+---------------+
+| student_id | student_name | department_id |
++------------+--------------+---------------+
+|        101 | Alice        |             1 |
+|        102 | Myuraa       |             2 |
+|        103 | sneha        |             1 |
+|        104 | hunny        |             1 |
+|        105 | honey        |             2 |
++------------+--------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Courses values (201, 'Data Structures', 1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Courses values (202, 'java programming',2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Courses values (203, 'C++',1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Courses values (204, 'C',2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Courses values (205, 'Front-end',2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from Courses;
++-----------+------------------+---------------+
+| course_id | course_name      | department_id |
++-----------+------------------+---------------+
+|       201 | Data Structures  |             1 |
+|       202 | java programming |             2 |
+|       203 | C++              |             1 |
+|       204 | C                |             2 |
+|       205 | Front-end        |             2 |
++-----------+------------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> mysql> drop table results;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc results;
+ERROR 1146 (42S02): Table 'myu.results' doesn't exist
+mysql> create table Results (
+    ->     result_id int primary key,
+    ->     student_id int,
+    ->     course_id int,
+    ->     marks int,
+    ->     foreign key (student_id) references student(student_id),
+    -> foreign key  (course_id)  references courses(course_id)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> insert into results values(1,101,201,89);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into results values(2,102,202,75);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into results values(3,103,203,67);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into results values(4,104,204,88);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into results values(5,105,205,91);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from results;
++-----------+------------+-----------+-------+
+| result_id | student_id | course_id | marks |
++-----------+------------+-----------+-------+
+|         1 |        101 |       201 |    89 |
+|         2 |        102 |       202 |    75 |
+|         3 |        103 |       203 |    67 |
+|         4 |        104 |       204 |    88 |
+|         5 |        105 |       205 |    91 |
++-----------+------------+-----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select
+    ->     d.department_name,
+    ->     s.student_id,
+    ->     s.student_name,
+    ->     c.course_name,
+    ->     r.marks
+    -> FROM
+    ->     department d
+    -> JOIN
+    ->     Student s ON d.department_id = s.department_id
+    -> JOIN
+    ->     results r ON s.student_id = r.student_id
+    -> JOIN
+    ->     courses c ON r.course_id = c.course_id
+    -> ORDER BY
+    ->     d.department_name, s.student_name, c.course_name;
+ERROR 1146 (42S02): Table 'myu.department' doesn't exist
+mysql>
+mysql> select
+    ->     d.department_name,
+    ->     s.student_id,
+    ->     s.student_name,
+    ->     c.course_name,
+    ->     r.marks
+    -> FROM
+    ->     departments d
+    -> JOIN
+    ->     Student s ON d.department_id = s.department_id
+    -> JOIN
+    ->     results r ON s.student_id = r.student_id
+    -> JOIN
+    ->     courses c ON r.course_id = c.course_id
+    -> ORDER BY
+    ->     d.department_name, s.student_name, c.course_name;
++----------------------+------------+--------------+------------------+-------+
+| department_name      | student_id | student_name | course_name      | marks |
++----------------------+------------+--------------+------------------+-------+
+| Computer Application |        105 | honey        | Front-end        |    91 |
+| Computer Application |        102 | Myuraa       | java programming |    75 |
+| Computer Science     |        101 | Alice        | Data Structures  |    89 |
+| Computer Science     |        104 | hunny        | C                |    88 |
+| Computer Science     |        103 | sneha        | C++              |    67 |
++----------------------+------------+--------------+------------------+-------+
+5 rows in set (0.03 sec)
+
+mysql>
+mysql> notee;

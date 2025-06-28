@@ -1,0 +1,136 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsd_task           |
+| hotel_db           |
+| information_schema |
+| mysql              |
+| mythili            |
+| performance_schema |
+| sakila             |
+| sys                |
+| task               |
+| world              |
++--------------------+
+10 rows in set (0.18 sec)
+
+mysql> use mythili;
+Database changed
+mysql> create table student(
+    -> sid int,
+    -> sname varchar(60),
+    -> gender char,
+    -> std_Email varchar(80),
+    -> sno int(10));
+Query OK, 0 rows affected, 1 warning (0.12 sec)
+
+mysql> desc student;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| sid       | int         | YES  |     | NULL    |       |
+| sname     | varchar(60) | YES  |     | NULL    |       |
+| gender    | char(1)     | YES  |     | NULL    |       |
+| std_Email | varchar(80) | YES  |     | NULL    |       |
+| sno       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.06 sec)
+
+mysql>  create table course(
+    -> cid int,
+    -> cname varchar(80),
+    -> department varchar(50),
+    -> course_fee int);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc course;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| cid        | int         | YES  |     | NULL    |       |
+| cname      | varchar(80) | YES  |     | NULL    |       |
+| department | varchar(50) | YES  |     | NULL    |       |
+| course_fee | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student values(1001,'Amir','M','amir@gmail.com',970908097);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into student values(1002,'Amar','M','amar@gmail.com',950908088);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into student values(1003,'balu','M','balu23@gmail.com',920408587);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into student values(1004,'meera','F','meenu90@gmail.com',720408527);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into student values(1005,'zara','F','zara@gmail.com',90341277854);
+ERROR 1264 (22003): Out of range value for column 'sno' at row 1
+mysql> insert into student values(1005,'zara','F','zara@gmail.com',9034127780);
+ERROR 1264 (22003): Out of range value for column 'sno' at row 1
+mysql> insert into student values(1005,'zara','F','zara@gmail.com',920408587);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from student;
++------+-------+--------+-------------------+-----------+
+| sid  | sname | gender | std_Email         | sno       |
++------+-------+--------+-------------------+-----------+
+| 1001 | Amir  | M      | amir@gmail.com    | 970908097 |
+| 1002 | Amar  | M      | amar@gmail.com    | 950908088 |
+| 1003 | balu  | M      | balu23@gmail.com  | 920408587 |
+| 1004 | meera | F      | meenu90@gmail.com | 720408527 |
+| 1005 | zara  | F      | zara@gmail.com    | 920408587 |
++------+-------+--------+-------------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into course values(1,'java','cs',10000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into course values(2,'java','cs',10300);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course values(3,'SQL','cs',13300);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into course values(4,'SQL','BCA',14300);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into course values(5,'HTML','BCA',12300);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from course;
++------+-------+------------+------------+
+| cid  | cname | department | course_fee |
++------+-------+------------+------------+
+|    1 | java  | cs         |      10000 |
+|    2 | java  | cs         |      10300 |
+|    3 | SQL   | cs         |      13300 |
+|    4 | SQL   | BCA        |      14300 |
+|    5 | HTML  | BCA        |      12300 |
++------+-------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE Course
+    -> SET CourseFee = 750.00
+    -> ;
+ERROR 1054 (42S22): Unknown column 'CourseFee' in 'field list'
+mysql> update course set course_fee=15000 where cid=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from course;
++------+-------+------------+------------+
+| cid  | cname | department | course_fee |
++------+-------+------------+------------+
+|    1 | java  | cs         |      15000 |
+|    2 | java  | cs         |      10300 |
+|    3 | SQL   | cs         |      13300 |
+|    4 | SQL   | BCA        |      14300 |
+|    5 | HTML  | BCA        |      12300 |
++------+-------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> notee;

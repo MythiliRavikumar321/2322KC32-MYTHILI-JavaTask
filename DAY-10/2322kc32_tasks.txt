@@ -1,0 +1,153 @@
+mysql> use mythili;
+Database changed
+mysql> desc student;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| sid       | int         | YES  |     | NULL    |       |
+| sname     | varchar(60) | YES  |     | NULL    |       |
+| gender    | char(1)     | YES  |     | NULL    |       |
+| std_Email | varchar(80) | YES  |     | NULL    |       |
+| sno       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> alter table student add mark int;
+Query OK, 0 rows affected (0.47 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| sid       | int         | YES  |     | NULL    |       |
+| sname     | varchar(60) | YES  |     | NULL    |       |
+| gender    | char(1)     | YES  |     | NULL    |       |
+| std_Email | varchar(80) | YES  |     | NULL    |       |
+| sno       | int         | YES  |     | NULL    |       |
+| mark      | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> update student set mark=67 where student_id=1001;
+ERROR 1054 (42S22): Unknown column 'student_id' in 'where clause'
+mysql> select* from student;
++------+-------+--------+-------------------+-----------+------+
+| sid  | sname | gender | std_Email         | sno       | mark |
++------+-------+--------+-------------------+-----------+------+
+| 1001 | Amir  | M      | amir@gmail.com    | 970908097 | NULL |
+| 1002 | Amar  | M      | amar@gmail.com    | 950908088 | NULL |
+| 1003 | balu  | M      | balu23@gmail.com  | 920408587 | NULL |
+| 1004 | meera | F      | meenu90@gmail.com | 720408527 | NULL |
+| 1005 | zara  | F      | zara@gmail.com    | 920408587 | NULL |
++------+-------+--------+-------------------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> update student set mark=67 where sid=1001;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark=90 where sid=1002;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark=80 where sid=1003;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark=78 where sid=1004;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set mark=92 where sid=1005;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from student;
++------+-------+--------+-------------------+-----------+------+
+| sid  | sname | gender | std_Email         | sno       | mark |
++------+-------+--------+-------------------+-----------+------+
+| 1001 | Amir  | M      | amir@gmail.com    | 970908097 |   67 |
+| 1002 | Amar  | M      | amar@gmail.com    | 950908088 |   90 |
+| 1003 | balu  | M      | balu23@gmail.com  | 920408587 |   80 |
+| 1004 | meera | F      | meenu90@gmail.com | 720408527 |   78 |
+| 1005 | zara  | F      | zara@gmail.com    | 920408587 |   92 |
++------+-------+--------+-------------------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> selectSELECT *
+    -> FROM Students
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selectSELECT *
+FROM Students' at line 1
+mysql> select* from student where mark>80;
++------+-------+--------+----------------+-----------+------+
+| sid  | sname | gender | std_Email      | sno       | mark |
++------+-------+--------+----------------+-----------+------+
+| 1002 | Amar  | M      | amar@gmail.com | 950908088 |   90 |
+| 1005 | zara  | F      | zara@gmail.com | 920408587 |   92 |
++------+-------+--------+----------------+-----------+------+
+2 rows in set (0.01 sec)
+
+mysql> desc course;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| cid        | int         | YES  |     | NULL    |       |
+| cname      | varchar(80) | YES  |     | NULL    |       |
+| department | varchar(50) | YES  |     | NULL    |       |
+| course_fee | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select* from course;
++------+-------+------------+------------+
+| cid  | cname | department | course_fee |
++------+-------+------------+------------+
+|    1 | java  | cs         |      15000 |
+|    2 | java  | cs         |      10300 |
+|    3 | SQL   | cs         |      13300 |
+|    4 | SQL   | BCA        |      14300 |
+|    5 | HTML  | BCA        |      12300 |
++------+-------+------------+------------+
+5 rows in set (0.03 sec)
+
+mysql> select* from course order by fee asc;
+ERROR 1054 (42S22): Unknown column 'fee' in 'order clause'
+mysql> select* from course order by course_fee asc;
++------+-------+------------+------------+
+| cid  | cname | department | course_fee |
++------+-------+------------+------------+
+|    2 | java  | cs         |      10300 |
+|    5 | HTML  | BCA        |      12300 |
+|    3 | SQL   | cs         |      13300 |
+|    4 | SQL   | BCA        |      14300 |
+|    1 | java  | cs         |      15000 |
++------+-------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select* from book;
++--------+-----------------------+-----------------+-----------+
+| bookid | title                 | author          | book_rate |
++--------+-----------------------+-----------------+-----------+
+|      1 | To kill a mockingbird | Harper Lee      |       200 |
+|      2 | life of pi            | Yann Martel     |       490 |
+|      3 | the kite Runner       | Khaled Hosseini |       620 |
+|      4 | the alchemist         | Paulo coelho    |       400 |
+|      5 | Harry potter series   | J.K.Rowling     |       900 |
++--------+-----------------------+-----------------+-----------+
+5 rows in set (0.03 sec)
+
+mysql> select* from book where title like'%the';
+Empty set (0.03 sec)
+
+mysql> select* from book where title like'%the%';
++--------+-----------------+-----------------+-----------+
+| bookid | title           | author          | book_rate |
++--------+-----------------+-----------------+-----------+
+|      3 | the kite Runner | Khaled Hosseini |       620 |
+|      4 | the alchemist   | Paulo coelho    |       400 |
++--------+-----------------+-----------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> notee;

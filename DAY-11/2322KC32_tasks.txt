@@ -1,0 +1,186 @@
+mysql> use mythili;
+Database changed
+mysql> create table student_courses (
+    ->     studentid int,
+    ->     courseid int
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into  student_courses values(1001,1);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into  student_courses values(1002,2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into  student_courses values(1003,3);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into  student_courses values(1004,4);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  student_courses values(1005,5);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into  student_courses values(1006,6);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into  student_courses values(1007,7);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from  student_courses;
++-----------+----------+
+| studentid | courseid |
++-----------+----------+
+|      1001 |        1 |
+|      1002 |        2 |
+|      1003 |        3 |
+|      1004 |        4 |
+|      1005 |        5 |
+|      1006 |        6 |
+|      1007 |        7 |
++-----------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select courseid, count(studentid) as student_count
+    -> from student_courses
+    -> group by courseid;
++----------+---------------+
+| courseid | student_count |
++----------+---------------+
+|        1 |             1 |
+|        2 |             1 |
+|        3 |             1 |
+|        4 |             1 |
+|        5 |             1 |
+|        6 |             1 |
+|        7 |             1 |
++----------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> select* from employee;
++-------+---------+-------+----------+
+| empid | empname | depid | salary   |
++-------+---------+-------+----------+
+|     1 | alex    |     1 | 50000.00 |
+|     2 | anbu    |     2 | 58000.00 |
+|     3 | karthi  |     3 | 48800.00 |
+|     4 | frank   |     4 | 39000.00 |
+|     5 | zin     |     5 | 67890.00 |
++-------+---------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select department, avg(salary) as average_salary
+    -> from employees
+    -> group by department;
+ERROR 1146 (42S02): Table 'mythili.employees' doesn't exist
+mysql> select department, avg(salary) as average_salary
+    -> from employee
+    -> group by department;
+ERROR 1054 (42S22): Unknown column 'department' in 'field list'
+mysql> select depid, avg(salary) as average_salary
+    -> from employee
+    -> group by depid;
++-------+----------------+
+| depid | average_salary |
++-------+----------------+
+|     1 |   50000.000000 |
+|     2 |   58000.000000 |
+|     3 |   48800.000000 |
+|     4 |   39000.000000 |
+|     5 |   67890.000000 |
++-------+----------------+
+5 rows in set (0.03 sec)
+
+mysql> update table_name
+    -> set column_name = new_value
+    -> where condition;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'condition' at line 3
+mysql> update customers
+    -> set salary=35567.78
+    -> where empid=4;
+ERROR 1054 (42S22): Unknown column 'empid' in 'where clause'
+mysql> update employee
+    -> set salary=35567.78
+    -> where empid=4;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select depid, avg(salary) as average_salary
+    ->     -> from employee
+    ->     -> group by depid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> from employee
+    -> group by depid' at line 2
+mysql> select depid, avg(salary) as average_salary
+    ->   from employeel
+    ->      group by depid;
+ERROR 1146 (42S02): Table 'mythili.employeel' doesn't exist
+mysql> select depid, avg(salary) as average_salary
+    ->   from employee
+    ->      group by depid;
++-------+----------------+
+| depid | average_salary |
++-------+----------------+
+|     1 |   50000.000000 |
+|     2 |   58000.000000 |
+|     3 |   48800.000000 |
+|     4 |   35567.780000 |
+|     5 |   67890.000000 |
++-------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> create table products (
+    ->     productid int,
+    ->     productname varchar(100),
+    ->     price decimal(10,2)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc products;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| productid   | int           | YES  |     | NULL    |       |
+| productname | varchar(100)  | YES  |     | NULL    |       |
+| price       | decimal(10,2) | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> insert into products values(1,'ICE CREAM',89.90);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into products values(2,'JUICE',40.90);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into products values(3,'NOODELES',20.60);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into products values(4,'PARLIG',10.60);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into products values(5,'AMUL',15.60);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from products;
++-----------+-------------+-------+
+| productid | productname | price |
++-----------+-------------+-------+
+|         1 | ICE CREAM   | 89.90 |
+|         2 | JUICE       | 40.90 |
+|         3 | NOODELES    | 20.60 |
+|         4 | PARLIG      | 10.60 |
+|         5 | AMUL        | 15.60 |
++-----------+-------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select 
+    ->     max(price) as max_price,
+    ->     min(price) as min_price
+    -> from products;
++-----------+-----------+
+| max_price | min_price |
++-----------+-----------+
+|     89.90 |     10.60 |
++-----------+-----------+
+1 row in set (0.03 sec)
+
+mysql> notee;

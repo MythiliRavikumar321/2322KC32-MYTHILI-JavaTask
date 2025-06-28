@@ -1,0 +1,71 @@
+mysql> use mythili;
+Database changed
+mysql> desc employee;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| empid   | int           | NO   | PRI | NULL    |       |
+| empname | varchar(80)   | YES  |     | NULL    |       |
+| depid   | int           | YES  | MUL | NULL    |       |
+| salary  | decimal(10,2) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+4 rows in set (0.04 sec)
+
+mysql> select* from employee;
++-------+---------+-------+----------+
+| empid | empname | depid | salary   |
++-------+---------+-------+----------+
+|     1 | alex    |     1 | 50000.00 |
+|     2 | anbu    |     2 | 58000.00 |
+|     3 | karthi  |     3 | 48800.00 |
+|     4 | frank   |     4 | 39000.00 |
+|     5 | zin     |     5 | 67890.00 |
++-------+---------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select* from employee where empname like'%a';
+Empty set (0.00 sec)
+
+mysql> select* from employee where empname like'a%';
++-------+---------+-------+----------+
+| empid | empname | depid | salary   |
++-------+---------+-------+----------+
+|     1 | alex    |     1 | 50000.00 |
+|     2 | anbu    |     2 | 58000.00 |
++-------+---------+-------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select* from employee where salary order by desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desc' at line 1
+mysql> select* from employee where order by salary desc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order by salary desc' at line 1
+mysql> SELECT *
+    -> FROM Employees
+    -> ORDER BY Salary DESC;
+ERROR 1146 (42S02): Table 'mythili.employees' doesn't exist
+mysql> 
+mysql> select * from employee order by salary desc;
++-------+---------+-------+----------+
+| empid | empname | depid | salary   |
++-------+---------+-------+----------+
+|     5 | zin     |     5 | 67890.00 |
+|     2 | anbu    |     2 | 58000.00 |
+|     1 | alex    |     1 | 50000.00 |
+|     3 | karthi  |     3 | 48800.00 |
+|     4 | frank   |     4 | 39000.00 |
++-------+---------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee order by salary asc;
++-------+---------+-------+----------+
+| empid | empname | depid | salary   |
++-------+---------+-------+----------+
+|     4 | frank   |     4 | 39000.00 |
+|     3 | karthi  |     3 | 48800.00 |
+|     1 | alex    |     1 | 50000.00 |
+|     2 | anbu    |     2 | 58000.00 |
+|     5 | zin     |     5 | 67890.00 |
++-------+---------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> notee;

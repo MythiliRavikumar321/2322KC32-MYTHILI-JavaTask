@@ -1,0 +1,169 @@
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use mythili;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_mythili |
++-------------------+
+| book              |
+| book_ticket       |
+| borrowbook        |
+| bus               |
+| course            |
+| customer          |
+| customers         |
+| department        |
+| dept              |
+| emp               |
+| employee          |
+| marks             |
+| member            |
+| orders            |
+| passenger         |
+| products          |
+| sales             |
+| student           |
+| student_courses   |
+| studentprofile    |
++-------------------+
+20 rows in set (0.01 sec)
+
+mysql> desc customer;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| customerid   | varchar(10)  | NO   | PRI | NULL    |       |
+| customername | varchar(100) | YES  |     | NULL    |       |
+| contactno    | int          | YES  |     | NULL    |       |
+| City         | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+4 rows in set (0.04 sec)
+
+mysql> desc customers;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| customerid | int          | NO   | PRI | NULL    |       |
+| name       | varchar(100) | YES  |     | NULL    |       |
+| age        | int          | YES  |     | NULL    |       |
+| country    | varchar(50)  | YES  |     | NULL    |       |
+| email      | varchar(100) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select* from customers;
++------------+-----------+------+---------+------------------+
+| customerid | name      | age  | country | email            |
++------------+-----------+------+---------+------------------+
+|          1 | john      |   30 | Canada  | john@outlook.com |
+|          2 | myur      |   28 | india   | myu@gmail.com    |
+|          3 | sree      |   29 | india   | sri09@gmail.com  |
+|          4 | sree devi |   32 | USA     | devi@gmail.com   |
+|          5 | ravi      |   32 | india   | ravi@gmail.com   |
++------------+-----------+------+---------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> select* from Orders;
++---------+------------+------------+
+| OrderID | OrderDate  | customerid |
++---------+------------+------------+
+|       1 | 2023-09-05 | 1          |
+|       2 | 2023-06-04 | 2          |
+|       3 | 2023-09-20 | 3          |
+|       4 | 2023-12-25 | 4          |
+|       5 | 2023-09-03 | 5          |
++---------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select 
+    ->     o.OrderID,
+    ->     o.OrderDate,
+    ->     o.customerid,
+    ->     c.name,
+    ->     c.country,
+    ->     c.email
+    -> from
+    ->     Orders o
+    -> inner join
+    ->     customers c ON o.customerid = c.customerid
+    -> where
+    -> o.OrderDate BETWEEN '2023-06-04' AND '2023-12-25'
+    -> 
+    ->         AND c.country = 'Canada'
+    -> 
+    ->     AND c.name LIKE '%m'
+    -> 
+    -> ORDER BY 
+    ->     o.OrderDate DESC;
+Empty set (0.04 sec)
+
+mysql> select 
+    ->     o.OrderID,
+    ->     o.OrderDate,
+    ->     o.customerid,
+    ->     c.name,
+    ->     c.country,
+    ->     c.email
+    -> from
+    ->     Orders o
+    -> inner join
+    ->     customers c ON o.customerid = c.customerid
+    -> where
+    -> o.OrderDate BETWEEN '2023-06-04' AND '2023-12-25'
+    -> ;
++---------+------------+------------+-----------+---------+------------------+
+| OrderID | OrderDate  | customerid | name      | country | email            |
++---------+------------+------------+-----------+---------+------------------+
+|       1 | 2023-09-05 | 1          | john      | Canada  | john@outlook.com |
+|       2 | 2023-06-04 | 2          | myur      | india   | myu@gmail.com    |
+|       3 | 2023-09-20 | 3          | sree      | india   | sri09@gmail.com  |
+|       4 | 2023-12-25 | 4          | sree devi | USA     | devi@gmail.com   |
+|       5 | 2023-09-03 | 5          | ravi      | india   | ravi@gmail.com   |
++---------+------------+------------+-----------+---------+------------------+
+5 rows in set (0.03 sec)
+
+mysql> select 
+    ->     o.OrderID,
+    ->     o.OrderDate,
+    ->     o.customerid,
+    ->     c.name,
+    ->     c.country,
+    ->     c.email
+    -> from
+    ->     Orders o
+    -> inner join
+    ->     customers c ON o.customerid = c.customerid
+    -> where
+    -> o.OrderDate BETWEEN '2023-06-04' AND '2023-12-25'
+    -> ;
++---------+------------+------------+-----------+---------+------------------+
+| OrderID | OrderDate  | customerid | name      | country | email            |
++---------+------------+------------+-----------+---------+------------------+
+|       1 | 2023-09-05 | 1          | john      | Canada  | john@outlook.com |
+|       2 | 2023-06-04 | 2          | myur      | india   | myu@gmail.com    |
+|       3 | 2023-09-20 | 3          | sree      | india   | sri09@gmail.com  |
+|       4 | 2023-12-25 | 4          | sree devi | USA     | devi@gmail.com   |
+|       5 | 2023-09-03 | 5          | ravi      | india   | ravi@gmail.com   |
++---------+------------+------------+-----------+---------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> select country from customers where country='Canada';
++---------+
+| country |
++---------+
+| Canada  |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select OrderDate from Orders where OrderDate BETWEEN '2023-06-04' AND '2023-09-05';
++------------+
+| OrderDate  |
++------------+
+| 2023-09-05 |
+| 2023-06-04 |
+| 2023-09-03 |
++------------+
+3 rows in set (0.00 sec)
+
+mysql> notee;

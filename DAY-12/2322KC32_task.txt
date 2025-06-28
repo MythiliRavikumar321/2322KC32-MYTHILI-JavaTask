@@ -1,0 +1,348 @@
+
+mysql> create database myu;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fsd_task           |
+| hotel_db           |
+| information_schema |
+| mysql              |
+| mythili            |
+| myu                |
+| performance_schema |
+| sakila             |
+| sys                |
+| task               |
+| world              |
++--------------------+
+11 rows in set (0.00 sec)
+
+mysql> use myu;
+Database changed
+
+mysql> create table Students (
+    ->     student_id int primary key,
+    ->     name varchar(50),
+    ->     Age int,
+    ->     gender char (1)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into Students values(1,'myur',17,'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Students values(2,'chandra',17,'F');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Students values(3,'likith',17,'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Students values(4,'dharsan',17,'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Students values(5,'sasvika',17,'F');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select* from Students;
++------------+---------+------+--------+
+| student_id | name    | Age  | gender |
++------------+---------+------+--------+
+|          1 | myur    |   17 | M      |
+|          2 | chandra |   17 | F      |
+|          3 | likith  |   17 | M      |
+|          4 | dharsan |   17 | M      |
+|          5 | sasvika |   17 | F      |
++------------+---------+------+--------+
+5 rows in set (0.00 sec)
+
+
+mysql> create table Marks (
+    ->     markid int primary key,
+    ->     studentid int,
+    ->     Subject varchar(50),
+    ->     score int,
+    ->     foreign key (studentid) references Students(student_id)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into Marks values(1,1,'Tamil',78);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Marks values(2,2,'English',85);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Marks values(3,3,'Maths',98);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Marks values(4,4,'Science',66);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Marks values(5,5,'Social',90);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from Marks;
++--------+-----------+---------+-------+
+| markid | studentid | Subject | score |
++--------+-----------+---------+-------+
+|      1 |         1 | Tamil   |    78 |
+|      2 |         2 | English |    85 |
+|      3 |         3 | Maths   |    98 |
+|      4 |         4 | Science |    66 |
+|      5 |         5 | Social  |    90 |
++--------+-----------+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select
+    ->     Students.student_id,
+    ->     Students.name,
+    ->     Students.Age,
+    ->     Students.gender,
+    ->     Marks.Subject,
+    ->     Marks.score
+    -> from
+    ->     Students
+    -> join
+    ->     Marks ON Students.student_id = Marks.studentid;
++------------+---------+------+--------+---------+-------+
+| student_id | name    | Age  | gender | Subject | score |
++------------+---------+------+--------+---------+-------+
+|          1 | myur    |   17 | M      | Tamil   |    78 |
+|          2 | chandra |   17 | F      | English |    85 |
+|          3 | likith  |   17 | M      | Maths   |    98 |
+|          4 | dharsan |   17 | M      | Science |    66 |
+|          5 | sasvika |   17 | F      | Social  |    90 |
++------------+---------+------+--------+---------+-------+
+5 rows in set (0.00 sec)
+mysql> show tables;
++---------------+
+| Tables_in_myu |
++---------------+
+| marks         |
+| students      |
++---------------+
+2 rows in set (0.27 sec)
+
+mysql> use mythili;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_mythili |
++-------------------+
+| book              |
+| book_ticket       |
+| borrowbook        |
+| bus               |
+| course            |
+| customers         |
+| department        |
+| dept              |
+| emp               |
+| employee          |
+| marks             |
+| member            |
+| passenger         |
+| products          |
+| sales             |
+| student           |
+| student_courses   |
+| studentprofile    |
++-------------------+
+18 rows in set (0.03 sec)
+
+mysql> desc Employee;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| empid   | int           | NO   | PRI | NULL    |       |
+| empname | varchar(80)   | YES  |     | NULL    |       |
+| depid   | int           | YES  | MUL | NULL    |       |
+| salary  | decimal(10,2) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> select* from Employee;
++-------+---------+-------+----------+
+| empid | empname | depid | salary   |
++-------+---------+-------+----------+
+|     1 | alex    |     1 | 50000.00 |
+|     2 | anbu    |     2 | 58000.00 |
+|     3 | karthi  |     3 | 48800.00 |
+|     4 | frank   |     4 | 35567.78 |
+|     5 | zin     |     5 | 67890.00 |
++-------+---------+-------+----------+
+5 rows in set (0.05 sec)
+
+mysql> select* from Employee where salary =(select MAX(salary) from Employee);
++-------+---------+-------+----------+
+| empid | empname | depid | salary   |
++-------+---------+-------+----------+
+|     5 | zin     |     5 | 67890.00 |
++-------+---------+-------+----------+
+1 row in set (0.04 sec)
+
+mysql> desc customers;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| customerid | int          | NO   | PRI | NULL    |       |
+| name       | varchar(100) | YES  |     | NULL    |       |
+| age        | int          | YES  |     | NULL    |       |
+| country    | varchar(50)  | YES  |     | NULL    |       |
+| email      | varchar(100) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select* from customers;
++------------+-----------+------+---------+------------------+
+| customerid | name      | age  | country | email            |
++------------+-----------+------+---------+------------------+
+|          1 | john      |   30 | Canada  | john@outlook.com |
+|          2 | myur      |   28 | india   | myu@gmail.com    |
+|          3 | sree      |   29 | india   | sri09@gmail.com  |
+|          4 | sree devi |   32 | USA     | devi@gmail.com   |
+|          5 | ravi      |   32 | india   | ravi@gmail.com   |
++------------+-----------+------+---------+------------------+
+5 rows in set (0.04 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_mythili |
++-------------------+
+| book              |
+| book_ticket       |
+| borrowbook        |
+| bus               |
+| course            |
+| customers         |
+| department        |
+| dept              |
+| emp               |
+| employee          |
+| marks             |
+| member            |
+| passenger         |
+| products          |
+| sales             |
+| student           |
+| student_courses   |
+| studentprofile    |
++-------------------+
+18 rows in set (0.00 sec)
+
+mysql> create table Customer(
+    ->     customerid varchar(10) primary key,
+    ->     customername varchar(100),
+    ->     contactno int,
+    ->         City (100),
+    ->    );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(100),
+   )' at line 5
+mysql> create table Customer(
+    ->     customerid varchar(10) primary key,
+    ->     customername varchar(100),
+    ->     contactno int,
+    ->         City varchar(100)
+    ->    );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> insert into  Customer values(
+    -> 1,'nithiya',9089735687,'coimbatore');
+ERROR 1264 (22003): Out of range value for column 'contactno' at row 1
+mysql> create table Customer(
+    ->     customerid varchar(10) primary key,
+    ->     customername varchar(100),
+    ->     contactno int(10),
+    ->         City varchar(100)
+    ->    );
+ERROR 1050 (42S01): Table 'customer' already exists
+mysql> insert into Customer values(1,'nithiya',12345678,'coimbatore');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Customer values(2,'dharsan',98762389,'coimbatore');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Customer values(3,'deepa',98881189,'coimbatore');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Customer values(4,'valli',78551780,'coimbatore');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Customer values(5,'vijay',78559083,'coimbatore');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from  Customer;
++------------+--------------+-----------+------------+
+| customerid | customername | contactno | City       |
++------------+--------------+-----------+------------+
+| 1          | nithiya      |  12345678 | coimbatore |
+| 2          | dharsan      |  98762389 | coimbatore |
+| 3          | deepa        |  98881189 | coimbatore |
+| 4          | valli        |  78551780 | coimbatore |
+| 5          | vijay        |  78559083 | coimbatore |
++------------+--------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> create table Orders (
+    ->     OrderID int primary key,
+    ->     OrderDate date,
+    ->      customerid  varchar(10),
+    ->     foreign key (customerid) references Customer(customerid)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> insert into Orders values(1,'2023-09-05',1):
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+mysql> insert into Orders values(1,'2023-09-05',1);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Orders values(2,'2023-06-04',2);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Orders values(3,'2023-09-20',3);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Orders values(4,'2023-12-25',4);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Orders values(5,'2023-09-03',5);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select* from Orders;
++---------+------------+------------+
+| OrderID | OrderDate  | customerid |
++---------+------------+------------+
+|       1 | 2023-09-05 | 1          |
+|       2 | 2023-06-04 | 2          |
+|       3 | 2023-09-20 | 3          |
+|       4 | 2023-12-25 | 4          |
+|       5 | 2023-09-03 | 5          |
++---------+------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select
+    ->     Orders.OrderID,
+    ->     Orders.OrderDate,
+    ->     Orders.customerid,
+    ->     Customer.customername,
+    ->     Customer.contactno,
+    ->         Customer.City
+    ->   from
+    ->     Orders
+    -> inner join
+    ->     Customer ON Orders.customerid = Customer.customerid;
++---------+------------+------------+--------------+-----------+------------+
+| OrderID | OrderDate  | customerid | customername | contactno | City       |
++---------+------------+------------+--------------+-----------+------------+
+|       1 | 2023-09-05 | 1          | nithiya      |  12345678 | coimbatore |
+|       2 | 2023-06-04 | 2          | dharsan      |  98762389 | coimbatore |
+|       3 | 2023-09-20 | 3          | deepa        |  98881189 | coimbatore |
+|       4 | 2023-12-25 | 4          | valli        |  78551780 | coimbatore |
+|       5 | 2023-09-03 | 5          | vijay        |  78559083 | coimbatore |
++---------+------------+------------+--------------+-----------+------------+
+5 rows in set (0.03 sec)
+
+mysql> notee;

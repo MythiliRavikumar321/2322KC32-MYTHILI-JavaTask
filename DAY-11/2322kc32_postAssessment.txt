@@ -1,0 +1,142 @@
+mysql> use mythili;
+Database changed
+mysql> create table department(
+    -> deptid int primary key,
+    -> deptname varchar(60)
+    -> location varchar(60));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'location varchar(60))' at line 4
+mysql> create table department(
+    -> deptid int primary key,
+    -> deptname varchar(60),
+    -> location varchar(60));
+ERROR 1050 (42S01): Table 'department' already exists
+mysql> desc department;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| depid    | int         | NO   | PRI | NULL    |       |
+| depname  | varchar(40) | YES  |     | NULL    |       |
+| location | varchar(80) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.04 sec)
+
+mysql> desc employee;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| empid   | int           | NO   | PRI | NULL    |       |
+| empname | varchar(80)   | YES  |     | NULL    |       |
+| depid   | int           | YES  | MUL | NULL    |       |
+| salary  | decimal(10,2) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select* from department;
++-------+---------+------------+
+| depid | depname | location   |
++-------+---------+------------+
+|     1 | HR      | coimbatore |
+|     2 | manager | coimbatore |
+|     3 | HR      | chennai    |
+|     4 | clerk   | chennai    |
+|     5 | saleman | salem      |
++-------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select* from employee;
++-------+---------+-------+----------+
+| empid | empname | depid | salary   |
++-------+---------+-------+----------+
+|     1 | alex    |     1 | 50000.00 |
+|     2 | anbu    |     2 | 58000.00 |
+|     3 | karthi  |     3 | 48800.00 |
+|     4 | frank   |     4 | 35567.78 |
+|     5 | zin     |     5 | 67890.00 |
++-------+---------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select d.depid,d.depname,count(e.empid) as total_employee,
+    -> avg(e.salary) as average_salary,
+    -> max(e.salary) as high_salary,
+    -> min(e.salary) as lowest_salary,
+    -> from employee e join department d on e.depid=d.deptid 
+    -> group by
+    -> d.depid,d.deptname 
+    -> order by
+    -> d.deptname;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employee e join department d on e.depid=d.deptid 
+group by
+d.depid,d.deptna' at line 5
+mysql> select d.depid,d.depname,count(e.empid) as total_employee,
+    -> avg(e.salary) as average_salary,
+    -> max(e.salary) as high_salary,
+    -> min(e.salary) as lowest_salary
+    -> from employee e join department d on e.depid=d.deptid 
+    -> group by
+    -> d.depid,d.deptname 
+    -> order by
+    -> d.deptname;
+ERROR 1054 (42S22): Unknown column 'd.deptid' in 'on clause'
+mysql> select d.depid,d.depname,count(e.empid) as total_employee,
+    -> avg(e.salary) as average_salary,
+    -> max(e.salary) as high_salary,
+    -> min(e.salary) as lowest_salary
+    -> from employee e join department d on e.depid=d.depid 
+    -> group by
+    -> d.depid,d.deptname 
+    -> order by
+    -> d.deptname;
+ERROR 1054 (42S22): Unknown column 'd.deptname' in 'group statement'
+mysql> select d.depid,d.depname,count(e.empid) as total_employee,
+    -> avg(e.salary) as average_salary,
+    -> max(e.salary) as high_salary,
+    -> min(e.salary) as lowest_salary
+    -> from employee e join department d on e.depid=d.deptid 
+    -> group by
+    -> d.depid,d.depname 
+    -> order by
+    -> d.deptname;
+ERROR 1054 (42S22): Unknown column 'd.deptid' in 'on clause'
+mysql> SELECT 
+    ->     d.depid,
+    ->     d.depname,
+    ->     COUNT(e.empid) AS total_employee,
+    ->     AVG(e.salary) AS average_salary,
+    ->     MAX(e.salary) AS high_salary,
+    ->     MIN(e.salary) AS lowest_salary
+    -> FROM 
+    ->     employee e
+    -> JOIN 
+    ->     department d ON e.depid = d.deptid
+    -> GROUP BY 
+    ->     d.depid, d.depname
+    -> ORDER BY 
+    ->     d.depname;
+ERROR 1054 (42S22): Unknown column 'd.deptid' in 'on clause'
+mysql> SELECT 
+    ->     d.depid,
+    ->     d.depname,
+    ->     COUNT(e.empid) AS total_employee,
+    ->     AVG(e.salary) AS average_salary,
+    ->     MAX(e.salary) AS high_salary,
+    ->     MIN(e.salary) AS lowest_salary
+    -> FROM 
+    ->     employee e
+    -> JOIN 
+    ->     department d ON e.depid = d.depid
+    -> GROUP BY 
+    ->     d.depid, d.depname
+    -> ORDER BY 
+    ->     d.depname;
++-------+---------+----------------+----------------+-------------+---------------+
+| depid | depname | total_employee | average_salary | high_salary | lowest_salary |
++-------+---------+----------------+----------------+-------------+---------------+
+|     4 | clerk   |              1 |   35567.780000 |    35567.78 |      35567.78 |
+|     1 | HR      |              1 |   50000.000000 |    50000.00 |      50000.00 |
+|     3 | HR      |              1 |   48800.000000 |    48800.00 |      48800.00 |
+|     2 | manager |              1 |   58000.000000 |    58000.00 |      58000.00 |
+|     5 | saleman |              1 |   67890.000000 |    67890.00 |      67890.00 |
++-------+---------+----------------+----------------+-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> notee;
